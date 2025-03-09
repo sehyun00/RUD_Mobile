@@ -1,16 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import LoginPage from './src/pages/Login_Signup/loginPage'; // LoginPage 컴포넌트 임포트
+import MainPage from './src/pages/mainPage';   // MainPage 컴포넌트 임포트
 
 export default function App() {
-    const handlePress = () => {
-        alert('버튼이 눌렸습니다!');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+    };
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>안녕하세요, RUD Mobile!</Text>
-            <Text style={styles.subtitle}>Open up App.js to start working on your app!</Text>
-            <Button title="클릭하세요" onPress={handlePress} color="#841584" />
+            {isLoggedIn ? (
+                <MainPage onLogout={handleLogout} />
+            ) : (
+                <LoginPage onLogin={handleLogin} />
+            )}
             <StatusBar style="auto" />
         </View>
     );
@@ -20,18 +31,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#666',
-        marginBottom: 20,
-        textAlign: 'center',
+        // alignItems: 'center', // 중앙 정렬 해제
+        // justifyContent: 'center', // 중앙 정렬 해제
     },
 });
